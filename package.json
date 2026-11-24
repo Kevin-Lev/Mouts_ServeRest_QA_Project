@@ -20,6 +20,9 @@
   "homepage": "https://github.com/Kevin-Lev/Mouts_ServeRest_QA_Project#readme",
   "devDependencies": {
     "@faker-js/faker": "^10.6.0",
-    "cypress": "^16.3.0"
+    "cypress": "^16.3.0",
+    "eslint": "^10.15.0",
+    "eslint-plugin-cypress": "^7.2.0",
+    "prettier": "^3.10.1"
   }
 }
