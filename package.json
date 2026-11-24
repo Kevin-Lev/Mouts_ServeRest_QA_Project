@@ -1,0 +1,25 @@
+{
+  "name": "mouts_serverest_qa_project",
+  "version": "1.0.0",
+  "description": "Implementação de testes automatizados na API e frontend da aplicação ServeRest com a linguagem JavaScript e o framework Cypress",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kevin-Lev/Mouts_ServeRest_QA_Project.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Kevin-Lev/Mouts_ServeRest_QA_Project/issues"
+  },
+  "homepage": "https://github.com/Kevin-Lev/Mouts_ServeRest_QA_Project#readme",
+  "devDependencies": {
+    "@faker-js/faker": "^10.6.0",
+    "cypress": "^16.3.0"
+  }
+}
