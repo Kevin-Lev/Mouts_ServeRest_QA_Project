@@ -7,7 +7,7 @@ module.exports = defineConfig({
       // implement node event listeners here
     },
   },
-  env: {
+  expose: {
     API_URL: "https://serverest.dev"
   },
   viewportWidth: 1280,
