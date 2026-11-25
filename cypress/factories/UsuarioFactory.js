@@ -10,6 +10,15 @@ export default class UsuarioFactory {
         }
     }
 
+    static createUserInvalidEmail() {
+        return {
+            nome: faker.person.fullName(),
+            email: 'emailInvalido.com.br',
+            password: 'abcd1234',
+            administrador: 'false'
+        }
+    }
+
     static createAdmin() {
         return {
             nome: faker.person.fullName(),
