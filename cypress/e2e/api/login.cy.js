@@ -7,7 +7,7 @@ describe('Login - ServRest', () => {
     before(() => {
         userPayload = UsuarioFactory.createUser()
 
-        UsuarioService.createUser(userPayload)
+        return UsuarioService.createUser(userPayload)
     })
 
     it('Login com Sucesso ao inserir credenciais válidas', () => {
