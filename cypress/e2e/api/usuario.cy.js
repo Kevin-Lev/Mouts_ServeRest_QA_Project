@@ -1,7 +1,7 @@
 import UsuarioFactory from "../../factories/UsuarioFactory"
 import UsuarioService from "../../pages/api/UsuarioService"
 
-describe('CRUD Usuários - ServRest', () => {
+describe('Usuários - ServRest', () => {
     let userPayload
     let userCreateStatus
     let userResBody
