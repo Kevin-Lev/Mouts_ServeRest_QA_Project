@@ -49,12 +49,54 @@ describe('Produtos - ServerRest', () => {
         })
     })
 
+    it('Produto com nome duplicado deve ocasionar falha', () => {
+        const newProductPayload = {...ProdutoFactory.createProduct(), nome: productPayload.nome}
+
+        ProdutoService.createProduto(userToken, newProductPayload).then((res) => {
+            expect(res.status).to.eq(400)
+            expect(res.body.message).to.eq('Já existe produto com esse nome')
+        })
+    })
+
+    it('Busca de produtos deve falhar quando preco não é número', () => {
+        ProdutoService.getAllProduto({ preco: 'R$ 159' }).then((res) => {
+            expect(res.status).to.eq(400)
+            expect(res.body.preco).to.eq('preco deve ser um número')
+        })
+    })
+
+    it('Busca de produto deve falhar quando o ID não existe', () => {
+        ProdutoService.getProduto('A3kR9mZx2Lp7QwT4').then((res) => {
+            expect(res.status).to.eq(400)
+            expect(res.body.message).to.eq('Produto não encontrado')
+        })
+    })
+
+    it('Falha ao atualizar produto com nome já utilizado', () => {
+        const newProductPayload = ProdutoFactory.createProduct()
+        const updatedProductPayload = { ...ProdutoFactory.createProduct(), nome: newProductPayload.nome }
+
+        ProdutoService.createProduto(userToken, newProductPayload).then(() => {
+            ProdutoService.updateProduto(userToken, productId, updatedProductPayload).then((res) => {
+                expect(res.status).to.eq(400)
+                expect(res.body.message).to.eq('Já existe produto com esse nome')
+            })
+        })
+    })
+
     it('Produto deve ser atualizado com sucesso', () => {
         const updatedProductPayload = ProdutoFactory.createProduct()
 
         ProdutoService.updateProduto(userToken, productId, updatedProductPayload).then((res) => {
             expect(res.status).to.eq(200)
             expect(res.body.message).to.eq('Registro alterado com sucesso')
+        })
+    })
+
+    it('Deleção de produto sem token de autenticação deve ser proibida ', () => {
+        ProdutoService.deleteProduto(null, productId).then((res) => {
+            expect(res.status).to.eq(401)
+            expect(res.body.message).to.be.eq('Token de acesso ausente, inválido, expirado ou usuário do token não existe mais')
         })
     })
 

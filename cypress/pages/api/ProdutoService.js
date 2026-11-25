@@ -23,10 +23,11 @@ class ProdutoService {
         })
     }
 
-    getAllProduto() {
+    getAllProduto(filtros = {}) {
         return cy.request({
             method: 'GET',
             url: `${Cypress.expose('API_URL')}/produtos`,
+            qs: filtros,
             failOnStatusCode: false
         })
     }
