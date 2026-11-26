@@ -10,11 +10,11 @@ describe('Admin cadastra produto', () => {
 
     before(() => {
         adminPayload = UsuarioFactory.createAdmin()
-        existingProdutoPayload = ProdutoFactory.createProduct()
+        existingProdutoPayload = ProdutoFactory.createProduto()
 
-        UsuarioService.createUser(adminPayload)
+        UsuarioService.createUsuario(adminPayload)
 
-        return UsuarioService.loginUser(adminPayload.email, adminPayload.password).then((res) => {
+        return UsuarioService.loginUsuario(adminPayload.email, adminPayload.password).then((res) => {
             return ProdutoService.createProduto(res.body.authorization, existingProdutoPayload)
         })
     })
@@ -26,7 +26,7 @@ describe('Admin cadastra produto', () => {
     })
 
     it('Admin deve cadastrar produto com sucesso', () => {
-        const produtoPayload = ProdutoFactory.createProduct()
+        const produtoPayload = ProdutoFactory.createProduto()
 
         AdminPage.inserirNomeProduto(produtoPayload.nome)
         AdminPage.inserirPrecoProduto(produtoPayload.preco)
@@ -41,7 +41,7 @@ describe('Admin cadastra produto', () => {
     })
 
     it('Deve falhar ao cadastrar produto com nome já cadastrado', () => {
-        const produtoPayload = { ...ProdutoFactory.createProduct(), nome: existingProdutoPayload.nome }
+        const produtoPayload = { ...ProdutoFactory.createProduto(), nome: existingProdutoPayload.nome }
 
         AdminPage.inserirNomeProduto(produtoPayload.nome)
         AdminPage.inserirPrecoProduto(produtoPayload.preco)
@@ -55,7 +55,7 @@ describe('Admin cadastra produto', () => {
     })
 
     it('Deve falhar ao cadastrar produto com preço negativo', () => {
-        const produtoPayload = { ...ProdutoFactory.createProduct(), preco: -10 }
+        const produtoPayload = { ...ProdutoFactory.createProduto(), preco: -10 }
 
         AdminPage.inserirNomeProduto(produtoPayload.nome)
         AdminPage.inserirPrecoProduto(produtoPayload.preco)

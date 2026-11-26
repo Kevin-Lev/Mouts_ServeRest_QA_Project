@@ -8,7 +8,7 @@ describe('Admin exclui usuário', () => {
     before(() => {
         adminPayload = UsuarioFactory.createAdmin()
 
-        return UsuarioService.createUser(adminPayload)
+        return UsuarioService.createUsuario(adminPayload)
     })
 
     beforeEach(() => {
@@ -18,21 +18,21 @@ describe('Admin exclui usuário', () => {
     })
 
     it('Admin deve excluir usuário com sucesso', () => {
-        const userPayload = UsuarioFactory.createUser()
+        const usuarioPayload = UsuarioFactory.createUsuario()
 
-        UsuarioService.createUser(userPayload).then(() => {
+        UsuarioService.createUsuario(usuarioPayload).then(() => {
             cy.reload()
 
-            AdminPage.clicaExcluirUsuario(userPayload.email)
+            AdminPage.clicaExcluirUsuario(usuarioPayload.email)
 
-            cy.contains(userPayload.email).should('not.exist')
+            cy.contains(usuarioPayload.email).should('not.exist')
         })
     })
 
     it('Admin não deve conseguir excluir o próprio usuário', () => {
         // o primeiro clique não dispara a validação, só o segundo. bug reproduzido manualmente.
         AdminPage.clicaExcluirUsuario(adminPayload.email)
-        AdminPage.clicaExcluirUsuario(adminPayload.email) 
+        AdminPage.clicaExcluirUsuario(adminPayload.email)
 
         cy.contains('Não é possível excluir o próprio usuário!').should('be.visible')
         cy.contains(adminPayload.email).should('be.visible')

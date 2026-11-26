@@ -4,12 +4,12 @@ import LoginPage from "../../../pages/frontend/LoginPage"
 import UsuarioPage from "../../../pages/frontend/UsuarioPage"
 
 describe('Login de Usuários', () => {
-    let userPayload
-    
-    before(() => {
-        userPayload = UsuarioFactory.createUser()
+    let usuarioPayload
 
-        return UsuarioService.createUser(userPayload)
+    before(() => {
+        usuarioPayload = UsuarioFactory.createUsuario()
+
+        return UsuarioService.createUsuario(usuarioPayload)
     })
 
     beforeEach(() => {
@@ -17,8 +17,8 @@ describe('Login de Usuários', () => {
     })
 
     it('Deve fazer login com sucesso', () => {
-        LoginPage.inserirEmail(userPayload.email)
-        LoginPage.inserirSenha(userPayload.password)
+        LoginPage.inserirEmail(usuarioPayload.email)
+        LoginPage.inserirSenha(usuarioPayload.password)
 
         LoginPage.clicaBotaoLogin()
 
@@ -26,7 +26,7 @@ describe('Login de Usuários', () => {
     })
 
     it('Deve falhar o login ao inserir e-mail ou senha inválidos', () => {
-        const usuarioInexistentePayload = UsuarioFactory.createUser()
+        const usuarioInexistentePayload = UsuarioFactory.createUsuario()
 
         LoginPage.inserirEmail(usuarioInexistentePayload.email)
         LoginPage.inserirSenha(usuarioInexistentePayload.password)
@@ -48,8 +48,8 @@ describe('Login de Usuários', () => {
 
     it('Deve realizar logout com sucesso', () => {
         cy.login({
-            email: userPayload.email,
-            password: userPayload.password
+            email: usuarioPayload.email,
+            password: usuarioPayload.password
         })
 
         cy.visit('/home')

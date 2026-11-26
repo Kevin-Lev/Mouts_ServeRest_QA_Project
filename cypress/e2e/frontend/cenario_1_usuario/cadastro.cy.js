@@ -4,14 +4,14 @@ import CadastroPage from "../../../pages/frontend/CadastroPage"
 import LoginPage from "../../../pages/frontend/LoginPage"
 
 describe('Cadastro de Usuários', () => {
-    let userPayload
-    let existingUserPayload
+    let usuarioPayload
+    let usuarioExistentePayload
 
     before(() => {
-        userPayload = UsuarioFactory.createUser()
-        existingUserPayload = UsuarioFactory.createUser()
+        usuarioPayload = UsuarioFactory.createUsuario()
+        usuarioExistentePayload = UsuarioFactory.createUsuario()
 
-        UsuarioService.createUser(existingUserPayload)
+        UsuarioService.createUsuario(usuarioExistentePayload)
     })
 
     beforeEach(() => {
@@ -20,10 +20,10 @@ describe('Cadastro de Usuários', () => {
     })
 
     it('Cadastrar usuário comum com sucesso', () => {
-        CadastroPage.inserirNome(userPayload.nome)
-        CadastroPage.inserirEmail(userPayload.email)
-        CadastroPage.inserirSenha(userPayload.password)
-        
+        CadastroPage.inserirNome(usuarioPayload.nome)
+        CadastroPage.inserirEmail(usuarioPayload.email)
+        CadastroPage.inserirSenha(usuarioPayload.password)
+
         CadastroPage.cadastrarUsuario()
 
         cy.contains('Cadastro realizado com sucesso').should('be.visible')
@@ -31,7 +31,7 @@ describe('Cadastro de Usuários', () => {
     })
 
     it('Cadastrar admin com sucesso', () => {
-        const adminPayload = UsuarioFactory.createUser()
+        const adminPayload = UsuarioFactory.createUsuario()
 
         CadastroPage.inserirNome(adminPayload.nome)
         CadastroPage.inserirEmail(adminPayload.email)
@@ -55,14 +55,14 @@ describe('Cadastro de Usuários', () => {
     })
 
     it('Cadastro deve falhar se e-mail já foi cadastrado', () => {
-        CadastroPage.inserirNome(userPayload.nome)
-        CadastroPage.inserirEmail(existingUserPayload.email)
-        CadastroPage.inserirSenha(userPayload.password)
+        CadastroPage.inserirNome(usuarioPayload.nome)
+        CadastroPage.inserirEmail(usuarioExistentePayload.email)
+        CadastroPage.inserirSenha(usuarioPayload.password)
 
         CadastroPage.cadastrarUsuario()
 
         cy.contains('Este email já está sendo usado').should('be.visible')
 
         cy.url().should('include', '/cadastrarusuarios')
-    })    
+    })
 })
