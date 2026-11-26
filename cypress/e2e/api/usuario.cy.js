@@ -40,9 +40,9 @@ describe('Usuários - ServRest', () => {
     })
 
     it('Deve atualizar um usuário com sucesso', () => {
-        const updatedUsuarioData = UsuarioFactory.createAdmin()
+        const usuarioAtualizadoPayload = UsuarioFactory.createAdmin()
 
-        UsuarioService.updateUsuario(usuarioResBody._id, updatedUsuarioData).then((res) => {
+        UsuarioService.updateUsuario(usuarioResBody._id, usuarioAtualizadoPayload).then((res) => {
             expect(res.status).to.eq(200)
             expect(res.body.message).to.eq("Registro alterado com sucesso")
         })
