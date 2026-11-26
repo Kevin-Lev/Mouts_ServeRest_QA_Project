@@ -1,29 +1,29 @@
 class ProdutoService {
-    createProduto(userToken, productPayload) {
+    createProduto(usuarioToken, produtoPayload) {
         return cy.request({
             method: 'POST',
             url: `${Cypress.expose('API_URL')}/produtos`,
-            body: productPayload,
+            body: produtoPayload,
             headers: {
-                Authorization: userToken
+                Authorization: usuarioToken
             },
             failOnStatusCode: false
         })
     }
 
-    updateProduto(userToken, productId, productPayload) {
+    updateProduto(usuarioToken, produtoId, produtoPayload) {
         return cy.request({
             method: 'PUT',
-            url: `${Cypress.expose('API_URL')}/produtos/${productId}`,
-            body: productPayload,
+            url: `${Cypress.expose('API_URL')}/produtos/${produtoId}`,
+            body: produtoPayload,
             headers: {
-                Authorization: userToken
+                Authorization: usuarioToken
             },
             failOnStatusCode: false
         })
     }
 
-    getAllProduto(filtros = {}) {
+    getAllProdutos(filtros = {}) {
         return cy.request({
             method: 'GET',
             url: `${Cypress.expose('API_URL')}/produtos`,
@@ -32,20 +32,20 @@ class ProdutoService {
         })
     }
 
-    getProduto(productId) {
+    getProduto(produtoId) {
         return cy.request({
             method: 'GET',
-            url: `${Cypress.expose('API_URL')}/produtos/${productId}`,
+            url: `${Cypress.expose('API_URL')}/produtos/${produtoId}`,
             failOnStatusCode: false
         })
     }
 
-    deleteProduto(userToken, productId) {
+    deleteProduto(usuarioToken, produtoId) {
         return cy.request({
             method: 'DELETE',
-            url: `${Cypress.expose('API_URL')}/produtos/${productId}`,
+            url: `${Cypress.expose('API_URL')}/produtos/${produtoId}`,
             headers: {
-                Authorization: userToken
+                Authorization: usuarioToken
             },
             failOnStatusCode: false
         })

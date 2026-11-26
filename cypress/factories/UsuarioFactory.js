@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker/locale/pt_BR'
 
 export default class UsuarioFactory {
-    static createUser() {
+    static createUsuario() {
         return {
             nome: faker.person.fullName(),
             email: faker.internet.email(),
@@ -10,7 +10,7 @@ export default class UsuarioFactory {
         }
     }
 
-    static createUserInvalidEmail() {
+    static createUsuarioEmailInvalido() {
         return {
             nome: faker.person.fullName(),
             email: 'emailInvalido.com.br',
