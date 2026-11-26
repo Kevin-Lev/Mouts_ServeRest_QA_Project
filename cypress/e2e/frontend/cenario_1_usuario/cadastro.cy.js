@@ -1,7 +1,7 @@
-import UsuarioFactory from "../../factories/UsuarioFactory"
-import UsuarioService from "../../pages/api/UsuarioService"
-import CadastroPage from "../../pages/frontend/CadastroPage"
-import LoginPage from "../../pages/frontend/LoginPage"
+import UsuarioFactory from "../../../factories/UsuarioFactory"
+import UsuarioService from "../../../pages/api/UsuarioService"
+import CadastroPage from "../../../pages/frontend/CadastroPage"
+import LoginPage from "../../../pages/frontend/LoginPage"
 
 describe('Cadastro de Usuários', () => {
     let userPayload
