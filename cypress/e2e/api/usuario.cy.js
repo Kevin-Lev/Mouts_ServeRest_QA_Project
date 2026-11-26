@@ -93,6 +93,17 @@ describe('Usuários - ServRest', () => {
     })
   })
 
+  it('Atualização de usuário com ID inexistente deve criar um novo cadastro', () => {
+    const usuarioNovoPayload = UsuarioFactory.createUsuario()
+
+    UsuarioService.updateUsuario(usuarioResBody._id, usuarioNovoPayload).then(
+      (res) => {
+        expect(res.status).to.eq(201)
+        expect(res.body.message).to.eq('Cadastro realizado com sucesso')
+      },
+    )
+  })
+
   it('Usuário com e-mail com formatação inválida retorna erro', () => {
     const usuarioEmailInvalido = UsuarioFactory.createUsuarioEmailInvalido()
 

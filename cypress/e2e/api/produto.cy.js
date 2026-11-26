@@ -7,20 +7,31 @@ describe('Produtos - ServerRest', () => {
   let usuarioPayload
   let produtoPayload
   let usuarioToken
+  let usuarioTokenNaoAdmin
   let produtoId
 
   before(() => {
     produtoPayload = ProdutoFactory.createProduto()
     usuarioPayload = UsuarioFactory.createAdmin()
+    const usuarioNaoAdminPayload = UsuarioFactory.createUsuario()
 
-    return UsuarioService.createUsuario(usuarioPayload).then(() => {
-      UsuarioService.loginUsuario(
-        usuarioPayload.email,
-        usuarioPayload.password,
-      ).then((res) => {
+    return UsuarioService.createUsuario(usuarioPayload)
+      .then(() =>
+        UsuarioService.loginUsuario(usuarioPayload.email, usuarioPayload.password),
+      )
+      .then((res) => {
         usuarioToken = res.body.authorization
       })
-    })
+      .then(() => UsuarioService.createUsuario(usuarioNaoAdminPayload))
+      .then(() =>
+        UsuarioService.loginUsuario(
+          usuarioNaoAdminPayload.email,
+          usuarioNaoAdminPayload.password,
+        ),
+      )
+      .then((res) => {
+        usuarioTokenNaoAdmin = res.body.authorization
+      })
   })
 
   it('Produto deve ser criado com sucesso', () => {
@@ -63,6 +74,16 @@ describe('Produtos - ServerRest', () => {
         expect(res.body.message).to.eq('Já existe produto com esse nome')
       },
     )
+  })
+
+  it('Criação de produto deve falhar com token de usuário não-admin', () => {
+    ProdutoService.createProduto(
+      usuarioTokenNaoAdmin,
+      ProdutoFactory.createProduto(),
+    ).then((res) => {
+      expect(res.status).to.eq(403)
+      expect(res.body.message).to.eq('Rota exclusiva para administradores')
+    })
   })
 
   it('Busca de produtos deve falhar quando preco não é número', () => {
