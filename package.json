@@ -8,7 +8,10 @@
     "cy:run": "cypress run --browser firefox",
     "cy:run:api": "cypress run --browser firefox --spec 'cypress/e2e/api/**/*.js'",
     "cy:run:frontend": "cypress run --browser firefox --spec 'cypress/e2e/frontend/**/*.cy.js'",
-    "cy:run:frontend:video": "cypress run --browser firefox --config video=true --spec 'cypress/e2e/frontend/**/*.cy.js'"
+    "cy:run:frontend:video": "cypress run --browser firefox --config video=true --spec 'cypress/e2e/frontend/**/*.cy.js'",
+    "lint": "eslint cypress",
+    "format": "prettier --write \"cypress/**/*.js\"",
+    "format:check": "prettier --check \"cypress/**/*.js\""
   },
   "repository": {
     "type": "git",

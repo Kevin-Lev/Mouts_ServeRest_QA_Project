@@ -62,6 +62,15 @@ npm run cy:run
 
 # Rodar apenas os testes de API
 npm run cy:run:api
+
+# Checar o código com ESLint
+npm run lint
+
+# Formatar o código com Prettier
+npm run format
+
+# Só checar a formatação, sem alterar nada (usado no CI)
+npm run format:check
 ```
 
 ## 👨‍💻 Autor
