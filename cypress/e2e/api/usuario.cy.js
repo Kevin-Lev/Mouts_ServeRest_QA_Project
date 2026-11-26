@@ -9,7 +9,7 @@ describe('Usuários - ServRest', () => {
     before(() => {
          userPayload = UsuarioFactory.createUser()
 
-         UsuarioService.createUser(userPayload).then((res) => {
+         return UsuarioService.createUser(userPayload).then((res) => {
              userCreateStatus = res.status
              userResBody = res.body
          })

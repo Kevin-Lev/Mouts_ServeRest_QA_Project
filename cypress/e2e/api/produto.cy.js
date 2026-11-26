@@ -14,7 +14,7 @@ describe('Produtos - ServerRest', () => {
         productPayload = ProdutoFactory.createProduct()
         userPayload = UsuarioFactory.createAdmin()
 
-        UsuarioService.createUser(userPayload).then(() => {
+        return UsuarioService.createUser(userPayload).then(() => {
             UsuarioService.loginUser(userPayload.email, userPayload.password).then((res) => {
                 userToken = res.body.authorization
             })
