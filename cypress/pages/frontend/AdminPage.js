@@ -52,6 +52,10 @@ class AdminPage {
         cy.get('[data-testid="quantity"]').type(quantidade)
     }
 
+    anexarImagemProduto(caminhoArquivo) {
+        cy.get('[data-testid="imagem"]').selectFile(caminhoArquivo)
+    }
+
     clicaCadastrarProduto() {
         cy.get('[data-testid="cadastarProdutos"]').click()
     }
