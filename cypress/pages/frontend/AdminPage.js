@@ -59,6 +59,10 @@ class AdminPage {
     clicaBotaologout() {
         cy.get('[data-testid="logout"]').click()
     }
+
+    clicaExcluirUsuario(email) {
+        cy.contains('tr', email).find('.btn-danger').click()
+    }
 }
 
 export default new AdminPage()
