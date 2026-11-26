@@ -67,6 +67,10 @@ class AdminPage {
     clicaExcluirUsuario(email) {
         cy.contains('tr', email).find('.btn-danger').click()
     }
+
+    clicaExcluirProduto(nomeProduto) {
+        cy.contains('tr', nomeProduto).find('.btn-danger').click()
+    }
 }
 
 export default new AdminPage()
