@@ -132,6 +132,17 @@ describe('Produtos - ServerRest', () => {
     })
   })
 
+  it('Atualização de produto deve falhar com token de usuário não-admin', () => {
+    ProdutoService.updateProduto(
+      usuarioTokenNaoAdmin,
+      produtoId,
+      ProdutoFactory.createProduto(),
+    ).then((res) => {
+      expect(res.status).to.eq(403)
+      expect(res.body.message).to.eq('Rota exclusiva para administradores')
+    })
+  })
+
   it('Deleção de produto sem token de autenticação deve ser proibida ', () => {
     ProdutoService.deleteProduto(null, produtoId).then((res) => {
       expect(res.status).to.eq(401)
@@ -141,10 +152,26 @@ describe('Produtos - ServerRest', () => {
     })
   })
 
+  it('Exclusão de produto deve falhar com token de usuário não-admin', () => {
+    ProdutoService.deleteProduto(usuarioTokenNaoAdmin, produtoId).then(
+      (res) => {
+        expect(res.status).to.eq(403)
+        expect(res.body.message).to.eq('Rota exclusiva para administradores')
+      },
+    )
+  })
+
   it('Produto deve ser excluído com sucesso', () => {
     ProdutoService.deleteProduto(usuarioToken, produtoId).then((res) => {
       expect(res.status).to.eq(200)
       expect(res.body.message).to.be.eq('Registro excluído com sucesso')
+    })
+  })
+
+  it('Exclusão de produto com ID já excluído não deve causar erro', () => {
+    ProdutoService.deleteProduto(usuarioToken, produtoId).then((res) => {
+      expect(res.status).to.eq(200)
+      expect(res.body.message).to.eq('Nenhum registro excluído')
     })
   })
 })
