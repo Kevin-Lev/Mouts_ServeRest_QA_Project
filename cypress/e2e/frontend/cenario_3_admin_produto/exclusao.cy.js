@@ -10,7 +10,7 @@ describe('Admin exclui produto', () => {
     before(() => {
         adminPayload = UsuarioFactory.createAdmin()
 
-        return UsuarioService.createUser(adminPayload)
+        return UsuarioService.createUsuario(adminPayload)
     })
 
     beforeEach(() => {
@@ -20,9 +20,9 @@ describe('Admin exclui produto', () => {
     })
 
     it('Admin deve excluir produto com sucesso', () => {
-        const produtoPayload = ProdutoFactory.createProduct()
+        const produtoPayload = ProdutoFactory.createProduto()
 
-        UsuarioService.loginUser(adminPayload.email, adminPayload.password).then((res) => {
+        UsuarioService.loginUsuario(adminPayload.email, adminPayload.password).then((res) => {
             return ProdutoService.createProduto(res.body.authorization, produtoPayload)
         }).then(() => {
             cy.reload()

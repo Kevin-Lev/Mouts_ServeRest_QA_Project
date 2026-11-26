@@ -1,14 +1,14 @@
 class UsuarioService {
-    createUser(userPayload) {
+    createUsuario(usuarioPayload) {
         return cy.request({
             method: 'POST',
             url: `${Cypress.expose('API_URL')}/usuarios`,
-            body: userPayload,
+            body: usuarioPayload,
             failOnStatusCode: false
         })
     }
 
-    getAllUsers() {
+    getAllUsuarios() {
         return cy.request({
             method: 'GET',
             url: `${Cypress.expose('API_URL')}/usuarios`,
@@ -16,32 +16,32 @@ class UsuarioService {
         })
     }
 
-    getUserById(userId) {
+    getUsuarioById(usuarioId) {
         return cy.request({
             method: 'GET',
-            url: `${Cypress.expose('API_URL')}/usuarios/${userId}`,
+            url: `${Cypress.expose('API_URL')}/usuarios/${usuarioId}`,
             failOnStatusCode: false
         })
     }
 
-    updateUser(userId, userPayload) {
+    updateUsuario(usuarioId, usuarioPayload) {
         return cy.request({
             method: 'PUT',
-            url: `${Cypress.expose('API_URL')}/usuarios/${userId}`,
-            body: userPayload,
+            url: `${Cypress.expose('API_URL')}/usuarios/${usuarioId}`,
+            body: usuarioPayload,
             failOnStatusCode: false
         })
     }
 
-    deleteUser(userId) {
+    deleteUsuario(usuarioId) {
         return cy.request({
             method: 'DELETE',
-            url: `${Cypress.expose('API_URL')}/usuarios/${userId}`,
+            url: `${Cypress.expose('API_URL')}/usuarios/${usuarioId}`,
             failOnStatusCode: false
         })
     }
 
-    loginUser(email, password) {
+    loginUsuario(email, password) {
         return cy.request({
             method: 'POST',
             url: `${Cypress.expose('API_URL')}/login`,

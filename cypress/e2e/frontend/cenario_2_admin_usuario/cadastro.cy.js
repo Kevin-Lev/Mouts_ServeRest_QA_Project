@@ -4,14 +4,14 @@ import AdminPage from "../../../pages/frontend/AdminPage"
 
 describe('Admin cadastra usuário', () => {
     let adminPayload
-    let existingUserPayload
+    let usuarioExistentePayload
 
     before(() => {
         adminPayload = UsuarioFactory.createAdmin()
-        existingUserPayload = UsuarioFactory.createUser()
+        usuarioExistentePayload = UsuarioFactory.createUsuario()
 
-        UsuarioService.createUser(adminPayload)
-        return UsuarioService.createUser(existingUserPayload)
+        UsuarioService.createUsuario(adminPayload)
+        return UsuarioService.createUsuario(usuarioExistentePayload)
     })
 
     beforeEach(() => {
@@ -21,38 +21,38 @@ describe('Admin cadastra usuário', () => {
     })
 
     it('Admin deve cadastrar usuário comum com sucesso', () => {
-        const userPayload = UsuarioFactory.createUser()
+        const usuarioPayload = UsuarioFactory.createUsuario()
 
-        AdminPage.inserirNomeUsuario(userPayload.nome)
-        AdminPage.inserirEmailUsuario(userPayload.email)
-        AdminPage.inserirSenhaUsuario(userPayload.password)
+        AdminPage.inserirNomeUsuario(usuarioPayload.nome)
+        AdminPage.inserirEmailUsuario(usuarioPayload.email)
+        AdminPage.inserirSenhaUsuario(usuarioPayload.password)
 
         AdminPage.clicaCadastrarUsuario()
 
         cy.url().should('include', 'admin/listarusuarios')
-        cy.contains(userPayload.email).should('be.visible')
+        cy.contains(usuarioPayload.email).should('be.visible')
     })
 
     it('Admin deve cadastrar admin com sucesso', () => {
-        const adminUserPayload = UsuarioFactory.createUser()
+        const novoAdminPayload = UsuarioFactory.createUsuario()
 
-        AdminPage.inserirNomeUsuario(adminUserPayload.nome)
-        AdminPage.inserirEmailUsuario(adminUserPayload.email)
-        AdminPage.inserirSenhaUsuario(adminUserPayload.password)
+        AdminPage.inserirNomeUsuario(novoAdminPayload.nome)
+        AdminPage.inserirEmailUsuario(novoAdminPayload.email)
+        AdminPage.inserirSenhaUsuario(novoAdminPayload.password)
         AdminPage.marcarAdmin()
 
         AdminPage.clicaCadastrarUsuario()
 
         cy.url().should('include', 'admin/listarusuarios')
-        cy.contains(adminUserPayload.email).should('be.visible')
+        cy.contains(novoAdminPayload.email).should('be.visible')
     })
 
     it('Deve falhar ao cadastrar usuário com e-mail já cadastrado', () => {
-        const userPayload = UsuarioFactory.createUser()
+        const usuarioPayload = UsuarioFactory.createUsuario()
 
-        AdminPage.inserirNomeUsuario(userPayload.nome)
-        AdminPage.inserirEmailUsuario(existingUserPayload.email)
-        AdminPage.inserirSenhaUsuario(userPayload.password)
+        AdminPage.inserirNomeUsuario(usuarioPayload.nome)
+        AdminPage.inserirEmailUsuario(usuarioExistentePayload.email)
+        AdminPage.inserirSenhaUsuario(usuarioPayload.password)
 
         AdminPage.clicaCadastrarUsuario()
 

@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker/locale/pt_BR'
 
 export default class ProdutoFactory {
-    static createProduct() {
+    static createProduto() {
         return {
             nome: faker.commerce.productName(),
             preco: faker.number.int({min: 1, max: 9999}),
@@ -10,7 +10,7 @@ export default class ProdutoFactory {
         }
     }
 
-    static createEmptyProduct() {
+    static createProdutoVazio() {
         return {
             nome: '',
             preco: null,

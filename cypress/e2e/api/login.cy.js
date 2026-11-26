@@ -2,16 +2,16 @@ import UsuarioFactory from "../../factories/UsuarioFactory"
 import UsuarioService from "../../pages/api/UsuarioService"
 
 describe('Login - ServRest', () => {
-    let userPayload
+    let usuarioPayload
 
     before(() => {
-        userPayload = UsuarioFactory.createUser()
+        usuarioPayload = UsuarioFactory.createUsuario()
 
-        return UsuarioService.createUser(userPayload)
+        return UsuarioService.createUsuario(usuarioPayload)
     })
 
     it('Login com Sucesso ao inserir credenciais válidas', () => {
-        UsuarioService.loginUser(userPayload.email, userPayload.password).then((res) => {
+        UsuarioService.loginUsuario(usuarioPayload.email, usuarioPayload.password).then((res) => {
             expect(res.status).to.eq(200)
             expect(res.body).to.have.property('message', 'Login realizado com sucesso')
             expect(res.body).to.have.property('authorization').include('Bearer')
@@ -19,14 +19,14 @@ describe('Login - ServRest', () => {
     })
 
     it('Falha no login quando credenciais são inválidas', () => {
-        UsuarioService.loginUser('email@qualquer.com', '555frev$').then((res) => {
+        UsuarioService.loginUsuario('email@qualquer.com', '555frev$').then((res) => {
             expect(res.status).to.eq(401)
             expect(res.body).to.have.property('message', 'Email e/ou senha inválidos')
         })
     })
 
     it('Falha no login quando e-mail ou senha estão vazios', () => {
-        UsuarioService.loginUser(null, null).then((res) => {
+        UsuarioService.loginUsuario(null, null).then((res) => {
             expect(res.status).to.eq(400)
             expect(res.body).to.have.property('password', 'password deve ser uma string')
             expect(res.body).to.have.property('email', 'email deve ser uma string')
@@ -34,7 +34,7 @@ describe('Login - ServRest', () => {
     })
 
     it('Falha no login quando e-mail ou senha estão em branco', () => {
-        UsuarioService.loginUser('', '').then((res) => {
+        UsuarioService.loginUsuario('', '').then((res) => {
             expect(res.status).to.eq(400)
             expect(res.body).to.have.property('password', 'password não pode ficar em branco')
             expect(res.body).to.have.property('email', 'email não pode ficar em branco')
