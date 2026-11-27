@@ -7,20 +7,34 @@ describe('Produtos - ServerRest', () => {
   let usuarioPayload
   let produtoPayload
   let usuarioToken
+  let usuarioTokenNaoAdmin
   let produtoId
 
   before(() => {
     produtoPayload = ProdutoFactory.createProduto()
     usuarioPayload = UsuarioFactory.createAdmin()
+    const usuarioNaoAdminPayload = UsuarioFactory.createUsuario()
 
-    return UsuarioService.createUsuario(usuarioPayload).then(() => {
-      UsuarioService.loginUsuario(
-        usuarioPayload.email,
-        usuarioPayload.password,
-      ).then((res) => {
+    return UsuarioService.createUsuario(usuarioPayload)
+      .then(() =>
+        UsuarioService.loginUsuario(
+          usuarioPayload.email,
+          usuarioPayload.password,
+        ),
+      )
+      .then((res) => {
         usuarioToken = res.body.authorization
       })
-    })
+      .then(() => UsuarioService.createUsuario(usuarioNaoAdminPayload))
+      .then(() =>
+        UsuarioService.loginUsuario(
+          usuarioNaoAdminPayload.email,
+          usuarioNaoAdminPayload.password,
+        ),
+      )
+      .then((res) => {
+        usuarioTokenNaoAdmin = res.body.authorization
+      })
   })
 
   it('Produto deve ser criado com sucesso', () => {
@@ -63,6 +77,16 @@ describe('Produtos - ServerRest', () => {
         expect(res.body.message).to.eq('Já existe produto com esse nome')
       },
     )
+  })
+
+  it('Criação de produto deve falhar com token de usuário não-admin', () => {
+    ProdutoService.createProduto(
+      usuarioTokenNaoAdmin,
+      ProdutoFactory.createProduto(),
+    ).then((res) => {
+      expect(res.status).to.eq(403)
+      expect(res.body.message).to.eq('Rota exclusiva para administradores')
+    })
   })
 
   it('Busca de produtos deve falhar quando preco não é número', () => {
@@ -111,6 +135,17 @@ describe('Produtos - ServerRest', () => {
     })
   })
 
+  it('Atualização de produto deve falhar com token de usuário não-admin', () => {
+    ProdutoService.updateProduto(
+      usuarioTokenNaoAdmin,
+      produtoId,
+      ProdutoFactory.createProduto(),
+    ).then((res) => {
+      expect(res.status).to.eq(403)
+      expect(res.body.message).to.eq('Rota exclusiva para administradores')
+    })
+  })
+
   it('Deleção de produto sem token de autenticação deve ser proibida ', () => {
     ProdutoService.deleteProduto(null, produtoId).then((res) => {
       expect(res.status).to.eq(401)
@@ -120,10 +155,26 @@ describe('Produtos - ServerRest', () => {
     })
   })
 
+  it('Exclusão de produto deve falhar com token de usuário não-admin', () => {
+    ProdutoService.deleteProduto(usuarioTokenNaoAdmin, produtoId).then(
+      (res) => {
+        expect(res.status).to.eq(403)
+        expect(res.body.message).to.eq('Rota exclusiva para administradores')
+      },
+    )
+  })
+
   it('Produto deve ser excluído com sucesso', () => {
     ProdutoService.deleteProduto(usuarioToken, produtoId).then((res) => {
       expect(res.status).to.eq(200)
       expect(res.body.message).to.be.eq('Registro excluído com sucesso')
+    })
+  })
+
+  it('Exclusão de produto com ID já excluído não deve causar erro', () => {
+    ProdutoService.deleteProduto(usuarioToken, produtoId).then((res) => {
+      expect(res.status).to.eq(200)
+      expect(res.body.message).to.eq('Nenhum registro excluído')
     })
   })
 })
