@@ -17,7 +17,10 @@ describe('Produtos - ServerRest', () => {
 
     return UsuarioService.createUsuario(usuarioPayload)
       .then(() =>
-        UsuarioService.loginUsuario(usuarioPayload.email, usuarioPayload.password),
+        UsuarioService.loginUsuario(
+          usuarioPayload.email,
+          usuarioPayload.password,
+        ),
       )
       .then((res) => {
         usuarioToken = res.body.authorization
